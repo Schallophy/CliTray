@@ -1,0 +1,130 @@
+<ui:FluentWindow x:Class="CliTray.ItemEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        Title="编辑托管程序"
+        Width="660" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowCornerPreference="Round"
+        WindowBackdropType="Mica"
+        ExtendsContentIntoTitleBar="True"
+        Background="{DynamicResource ApplicationBackgroundBrush}"
+        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+        FontFamily="Microsoft YaHei UI, Segoe UI" FontSize="13"
+        TextOptions.TextFormattingMode="Display"
+        UseLayoutRounding="True" SnapsToDevicePixels="True">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ui:TitleBar x:Name="WindowTitleBar" Grid.Row="0" Title="编辑托管程序"
+                     ShowMaximize="False" ShowMinimize="False"/>
+
+        <Grid Grid.Row="1" Margin="24,16,24,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="96"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="名称"
+                       Style="{StaticResource FieldLabel}" Margin="0,0,12,12"/>
+            <ui:TextBox x:Name="NameBox" Grid.Row="0" Grid.Column="1" Margin="0,0,0,12"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="程序"
+                       Style="{StaticResource FieldLabel}" Margin="0,0,12,12"/>
+            <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ui:TextBox x:Name="FileBox" Grid.Column="0"/>
+                <ui:Button Content="浏览..." Appearance="Secondary" Grid.Column="1"
+                           Margin="8,0,0,0" Padding="12,4" Click="BrowseFile"/>
+            </Grid>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="参数"
+                       Style="{StaticResource FieldLabel}" Margin="0,0,12,12"/>
+            <ui:TextBox x:Name="ArgsBox" Grid.Row="2" Grid.Column="1" Margin="0,0,0,12"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="工作目录"
+                       Style="{StaticResource FieldLabel}" Margin="0,0,12,12"/>
+            <Grid Grid.Row="3" Grid.Column="1" Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ui:TextBox x:Name="WorkDirBox" Grid.Column="0"/>
+                <ui:Button Content="浏览..." Appearance="Secondary" Grid.Column="1"
+                           Margin="8,0,0,0" Padding="12,4" Click="BrowseWorkDir"/>
+            </Grid>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="日志文件"
+                       Style="{StaticResource FieldLabel}" Margin="0,0,12,12"/>
+            <Grid Grid.Row="4" Grid.Column="1" Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ui:TextBox x:Name="LogFileBox" Grid.Column="0"/>
+                <ui:Button Content="浏览..." Appearance="Secondary" Grid.Column="1"
+                           Margin="8,0,0,0" Padding="12,4" Click="BrowseLogFile"/>
+            </Grid>
+
+            <CheckBox x:Name="AutoStartBox" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                      Content="随托盘启动（登录后）" Margin="0,0,0,12"/>
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="启动延迟"
+                       Style="{StaticResource FieldLabel}" Margin="0,0,12,12"/>
+            <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,12">
+                <ui:NumberBox x:Name="DelayBox" Width="110" Minimum="0" Maximum="3600"/>
+                <TextBlock Text="秒，0 表示立即启动" Style="{StaticResource HintText}"
+                           Margin="10,0,0,0"/>
+            </StackPanel>
+
+            <TextBlock Grid.Row="7" Grid.Column="0" Text="停止超时"
+                       Style="{StaticResource FieldLabel}" Margin="0,0,12,12"/>
+            <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,12">
+                <ui:NumberBox x:Name="StopTimeoutBox" Width="110" Minimum="1" Maximum="60"/>
+                <TextBlock Text="秒，仅用于带窗口的程序" Style="{StaticResource HintText}"
+                           Margin="10,0,0,0"/>
+            </StackPanel>
+
+            <CheckBox x:Name="ShowConsoleBox" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"
+                      Content="显示控制台窗口"
+                      Margin="0,0,0,12"/>
+
+            <TextBlock x:Name="ErrorText" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2"
+                       Foreground="{DynamicResource SystemFillColorCriticalBrush}"
+                       TextWrapping="Wrap" Visibility="Collapsed" Margin="0,0,0,8"/>
+        </Grid>
+
+        <Border Grid.Row="2" Padding="24,10"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                BorderThickness="0,1,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <ui:Button Content="取消" Appearance="Secondary" Width="90"
+                           IsCancel="True" Margin="0,0,8,0" Padding="0,4"/>
+                <ui:Button Content="确定" Appearance="Primary" Width="90"
+                           IsDefault="True" Padding="0,4" Click="OkClicked"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</ui:FluentWindow>
